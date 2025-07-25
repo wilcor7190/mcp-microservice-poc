@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "nodejs-validator": {
+      "command": "node",
+      "args": ["C:/MCP/demo/demo-mcp-3-standards-validator_nodejs/dist/index.js"],
+      "cwd": "C:/MCP/demo/demo-mcp-3-standards-validator_nodejs"
+    }
+  }
+}

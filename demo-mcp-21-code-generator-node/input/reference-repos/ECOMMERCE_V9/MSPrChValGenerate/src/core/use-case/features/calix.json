@@ -1,0 +1,1091 @@
+[
+    {
+        "id": "PO_Equ70030533",
+        "href": "/ecm/ecm/CatalogManagement/v2/productOffering/PO_Equ70030533",
+        "versions": [
+            {
+                "id": "PO_Equ70030533",
+                "name": "MOT MOTG6PXT19224 AZ +MOTOE5",
+                "state": "DEF",
+                "description": "Motorola G6 con Moto E5 Azul",
+                "validFor": {
+                    "startDateTime": "2022-05-24T03:59:19.000-5",
+                    "enddatetime": ""
+                },
+                "baseEntityId": "BASEPO_EquMOTOROLA",
+                "specificationType": "ProductOffering",
+                "sellIndicator": true,
+                "characteristics": [
+                    {
+                        "id": "CLASIFICACION_FISCAL",
+                        "versions": [
+                            {
+                                "value": "A",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CLASIFICACION_FISCAL"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CodigoMaterial",
+                        "versions": [
+                            {
+                                "value": "70030533",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CodigoMaterial"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "BAND",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "BAND"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "BANDAS_DISPONIBLES",
+                        "versions": [
+                            {
+                                "value": "4G",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "BANDAS_DISPONIBLES"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "BATERIA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "BATERIA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "BLUETOOTH",
+                        "versions": [
+                            {
+                                "value": "SI",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "BLUETOOTH"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CAMARA_DIGITAL_PRIMARIA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CAMARA_DIGITAL_PRIMARIA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CAMARA_DIGITAL_SECUNDARIA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CAMARA_DIGITAL_SECUNDARIA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CAMARA_PRIMARIA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CAMARA_PRIMARIA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CAMARA_PRINCIPAL_TRASERA",
+                        "versions": [
+                            {
+                                "value": "13 MP",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CAMARA_PRINCIPAL_TRASERA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CAMARA_SECUNDARIA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CAMARA_SECUNDARIA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CAMARA_SECUNDARIA_SELFIE",
+                        "versions": [
+                            {
+                                "value": "8 MP",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CAMARA_SECUNDARIA_SELFIE"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CANTIDAD_CAMARAS_FRONTALES_SEL",
+                        "versions": [
+                            {
+                                "value": "1",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CANTIDAD_CAMARAS_FRONTALES_SEL"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CANTIDAD_CAMARAS_PRINCIPAL_TRA",
+                        "versions": [
+                            {
+                                "value": "1",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CANTIDAD_CAMARAS_PRINCIPAL_TRA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CAPACIDAD_DE_PROCESADOR",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CAPACIDAD_DE_PROCESADOR"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CATEGORIA_C",
+                        "versions": [
+                            {
+                                "value": "HABLA;ESCRIBE;COMPARTE MOMENTO",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CATEGORIA_C"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CATEGORIA_DIA_SIN_IVA",
+                        "versions": [
+                            {
+                                "value": "CELULARES",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CATEGORIA_DIA_SIN_IVA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CATEGORIA_USO",
+                        "versions": [
+                            {
+                                "value": "Datos y Voz",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CATEGORIA_USO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CLASIFICACION",
+                        "versions": [
+                            {
+                                "value": "MOTOROLAMOTOG6PLAY32 GB",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CLASIFICACION"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CLASIFICACION_AMX",
+                        "versions": [
+                            {
+                                "value": "SMARTPHONE",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CLASIFICACION_AMX"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CODIGO_APPLE",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CODIGO_APPLE"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Color",
+                        "versions": [
+                            {
+                                "value": "AZUL",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "Color"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CONTENIDO_DE_PRODUCTO",
+                        "versions": [
+                            {
+                                "value": "CABLEDATOS/CARGADOR /F.PROTECT",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CONTENIDO_DE_PRODUCTO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "CRITICIDAD",
+                        "versions": [
+                            {
+                                "value": "VENTAS",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "CRITICIDAD"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "DESBLOQUEO",
+                        "versions": [
+                            {
+                                "value": "CODIGOFACIAL  HUELLA  PIN",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "DESBLOQUEO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "DISENO_DE_PANTALLA",
+                        "versions": [
+                            {
+                                "value": "19:09",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "DISENO_DE_PANTALLA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "ESIM",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "ESIM"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "ESTADO_EQUIPO",
+                        "versions": [
+                            {
+                                "value": "NUEVO",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "ESTADO_EQUIPO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "FORMATO_EQUIPO",
+                        "versions": [
+                            {
+                                "value": "NANOSIM",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "FORMATO_EQUIPO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "FRECUENCIAS",
+                        "versions": [
+                            {
+                                "value": "2100;1900;1800;1700;2100;850;2",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "FRECUENCIAS"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "FRONTAL_CAMERA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "FRONTAL_CAMERA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "FUNCIONALES_ESPECIALES",
+                        "versions": [
+                            {
+                                "value": "CÁMARA13 MPCONENFOQUERÁPIDO",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "FUNCIONALES_ESPECIALES"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Gama",
+                        "versions": [
+                            {
+                                "value": "MEDIA",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "Gama"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "GPS",
+                        "versions": [
+                            {
+                                "value": "SI",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "GPS"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "INTELIGENCIA_ARTIFICIAL",
+                        "versions": [
+                            {
+                                "value": "SI",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "INTELIGENCIA_ARTIFICIAL"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "LINEA_DE_PRODUCTO",
+                        "versions": [
+                            {
+                                "value": "DE SALIDA",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "LINEA_DE_PRODUCTO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "FabricanteEquipos",
+                        "versions": [
+                            {
+                                "value": "MOTOROLA",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "FabricanteEquipos"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "MATERIAL_DE_FABRICACION",
+                        "versions": [
+                            {
+                                "value": "POLIMERO CRISTALIZADO",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "MATERIAL_DE_FABRICACION"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "MEMORIA_INTERNA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "MEMORIA_INTERNA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "MEMORIA_RAM",
+                        "versions": [
+                            {
+                                "value": "3 GB",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "MEMORIA_RAM"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "MEMORIA_ROM",
+                        "versions": [
+                            {
+                                "value": "32 GB",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "MEMORIA_ROM"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "MEMORIA_ROM_DISPONIBLE_USUARIO",
+                        "versions": [
+                            {
+                                "value": "28 GB",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "MEMORIA_ROM_DISPONIBLE_USUARIO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "MODALIDAD",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "MODALIDAD"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "MODELOHANDSETS",
+                        "versions": [
+                            {
+                                "value": "MOTOG6PLAYXT1922-4",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "MODELOHANDSETS"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "ModeloEquipos",
+                        "versions": [
+                            {
+                                "value": "MOTOG6PLAYXT1922-4",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "ModeloEquipos"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "NFC",
+                        "versions": [
+                            {
+                                "value": "NO",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "NFC"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "NOMBRE_COMERCIAL",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "NOMBRE_COMERCIAL"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "NUMERO_DE_PARTE",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "NUMERO_DE_PARTE"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "OBSOLESCENCIA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "OBSOLESCENCIA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "PANTALLA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "PANTALLA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "PESO_DEL_EQUIPO",
+                        "versions": [
+                            {
+                                "value": "173 GR",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "PESO_DEL_EQUIPO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "PROCESADOR",
+                        "versions": [
+                            {
+                                "value": "QUALCOMM SNAPDRAGON 430 OCTA C",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "PROCESADOR"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "PTT",
+                        "versions": [
+                            {
+                                "value": "NO",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "PTT"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "QWERTY",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "QWERTY"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "RADIO",
+                        "versions": [
+                            {
+                                "value": "SI",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "RADIO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "RAM",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "RAM"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "RANURA_DE_EXPANSION_CAPACIDAD",
+                        "versions": [
+                            {
+                                "value": "256 GB",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "RANURA_DE_EXPANSION_CAPACIDAD"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "REAR_CAMERA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "REAR_CAMERA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "RESOLUCION_DE_PANTALLA",
+                        "versions": [
+                            {
+                                "value": "720 X 1440",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "RESOLUCION_DE_PANTALLA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "ROM",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "ROM"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "ROTACION_C",
+                        "versions": [
+                            {
+                                "value": "SIN AMX",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "ROTACION_C"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "SD_CARD",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "SD_CARD"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "SEGMENTO",
+                        "versions": [
+                            {
+                                "value": "HANDSET",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "SEGMENTO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "SIMCARD",
+                        "versions": [
+                            {
+                                "value": "MICROSIMCARD",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "SIMCARD"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "SINGLE_SIM_CARD__DUAL_SIM",
+                        "versions": [
+                            {
+                                "value": "SINGLE SIM",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "SINGLE_SIM_CARD__DUAL_SIM"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "SISTEMA_OPERATIVO",
+                        "versions": [
+                            {
+                                "value": "ANDROID",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "SISTEMA_OPERATIVO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "SUBCATEGORIA",
+                        "versions": [
+                            {
+                                "value": "Nav - Touch Media",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "SUBCATEGORIA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TAMANO_DEL_EQUIPO",
+                        "versions": [
+                            {
+                                "value": "154.4 X 72.2 X 8.9 MM",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TAMANO_DEL_EQUIPO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TAMANO_DE_PANTALLA",
+                        "versions": [
+                            {
+                                "value": "5.70",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TAMANO_DE_PANTALLA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TAMANO_PANTALLA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TAMANO_PANTALLA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TecnologiaEquipos",
+                        "versions": [
+                            {
+                                "value": "LTE",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TecnologiaEquipos"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TIPO_ARTICULO",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TIPO_ARTICULO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TIPO_CONECTIVIDAD",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TIPO_CONECTIVIDAD"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TIPO_DE_BATERIA",
+                        "versions": [
+                            {
+                                "value": "4000 MAH",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TIPO_DE_BATERIA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TIPO_DE_CHIPSET",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TIPO_DE_CHIPSET"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TIPO_DE_PANTALLA",
+                        "versions": [
+                            {
+                                "value": "NIPPON ELECTRIC GLASS",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TIPO_DE_PANTALLA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TIPO_DE_STOCK",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TIPO_DE_STOCK"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "specificationSubSubtype",
+                        "versions": [
+                            {
+                                "value": "Smartphone",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "specificationSubSubtype"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "TIPO_VENTA",
+                        "versions": [
+                            {
+                                "value": "POSTPAGO",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "TIPO_VENTA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "UTILIZACION",
+                        "versions": [
+                            {
+                                "value": "PROMOCION",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "UTILIZACION"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "UVT",
+                        "versions": [
+                            {
+                                "value": "022",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "UVT"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "UVT_DIA_SIN_IVA",
+                        "versions": [
+                            {
+                                "value": "080",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "UVT_DIA_SIN_IVA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "VELOCIDAD_CONEXION_DL",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "VELOCIDAD_CONEXION_DL"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "VELOCIDAD_CONEXION_UL",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "VELOCIDAD_CONEXION_UL"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "VENTA",
+                        "versions": [
+                            {
+                                "value": "Sí",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "VENTA"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "WIFI",
+                        "versions": [
+                            {
+                                "value": "SI",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "WIFI"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "ZREQUIERE_TIPO_SIM_AMDOCS",
+                        "versions": [
+                            {
+                                "value": "MICROSIM",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "ZREQUIERE_TIPO_SIM_AMDOCS"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "ZUTILIZACION_SIMCARD_PREPAGO",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "ZUTILIZACION_SIMCARD_PREPAGO"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "id": "Z_CO_DIAS_ADIC_CONSIGNA",
+                        "versions": [
+                            {
+                                "value": "",
+                                "changeState": "inherited",
+                                "valueTypeSpecification": {
+                                    "id": "Z_CO_DIAS_ADIC_CONSIGNA"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]

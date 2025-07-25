@@ -1,0 +1,51 @@
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+{{#if security.cors}}
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+{{/if}}
+{{#if security.authentication}}
+import { JwtAuthGuard } from './infrastructure/web/guards/jwt-auth.guard';
+{{/if}}
+
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
+
+  // Global validation pipe
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+
+  {{#if security.cors}}
+  // CORS configuration
+  const corsOptions: CorsOptions = {
+    origin: process.env.CORS_ORIGIN || '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  };
+  app.enableCors(corsOptions);
+  {{/if}}
+
+  {{#if security.authentication}}
+  // Global authentication guard
+  app.useGlobalGuards(new JwtAuthGuard());
+  {{/if}}
+
+  // API prefix
+  app.setGlobalPrefix('api/v1');
+
+  const port = process.env.PORT || {{microservice.port}};
+  await app.listen(port);
+  
+  console.log(`🚀 {{microservice.name}} is running on: http://localhost:${port}`);
+  console.log(`📚 API Documentation: http://localhost:${port}/api`);
+}
+
+bootstrap().catch((error) => {
+  console.error('Error starting application:', error);
+  process.exit(1);
+});

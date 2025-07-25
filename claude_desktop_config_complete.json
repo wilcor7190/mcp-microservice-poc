@@ -1,0 +1,39 @@
+{
+  "mcpServers": {
+    "document-processor": {
+      "command": "node",
+      "args": ["C:\\MCP\\demo\\demo-mcp-1-document-processor\\dist\\index.js"],
+      "cwd": "C:\\MCP\\demo\\demo-mcp-1-document-processor"
+    },
+    "code-orchestrator": {
+      "command": "node",
+      "args": ["C:\\MCP\\demo\\demo-mcp-2-code-generatororequestador\\dist\\index.js"],
+      "cwd": "C:\\MCP\\demo\\demo-mcp-2-code-generatororequestador"
+    },
+    "nodejs-generator": {
+      "command": "node",
+      "args": ["C:\\MCP\\demo\\demo-mcp-21-code-generator-node\\microservice-generator-mcp\\dist\\index.js"],
+      "cwd": "C:\\MCP\\demo\\demo-mcp-21-code-generator-node\\microservice-generator-mcp"
+    },
+    "java-generator": {
+      "command": "node",
+      "args": ["C:\\MCP\\demo\\demo-mcp-22-code-generator-java\\dist\\index.js"],
+      "cwd": "C:\\MCP\\demo\\demo-mcp-22-code-generator-java"
+    },
+    "standards-orchestrator": {
+      "command": "node",
+      "args": ["C:\\MCP\\demo\\demo-mcp-3-standards-validatororquestador\\dist\\index.js"],
+      "cwd": "C:\\MCP\\demo\\demo-mcp-3-standards-validatororquestador"
+    },
+    "nodejs-validator": {
+      "command": "node", 
+      "args": ["C:\\MCP\\demo\\demo-mcp-3-standards-validator_nodejs\\dist\\index.js"],
+      "cwd": "C:\\MCP\\demo\\demo-mcp-3-standards-validator_nodejs"
+    },
+    "java-validator": {
+      "command": "node",
+      "args": ["C:\\MCP\\demo\\demo-mcp-3-standards-validator_java\\dist\\index.js"], 
+      "cwd": "C:\\MCP\\demo\\demo-mcp-3-standards-validator_java"
+    }
+  }
+}

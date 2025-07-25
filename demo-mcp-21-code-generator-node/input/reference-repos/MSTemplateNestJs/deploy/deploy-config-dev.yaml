@@ -1,0 +1,261 @@
+---
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: ${NAME}
+  annotations:
+    openshift.io/display-name: Node.js
+    description: MSTemplateNestJs Ecommerce V9
+    tags: instalacion,install,nodejs
+    iconClass: icon-nodejs
+    openshift.io/long-description: Esta plantilla define los recursos necesarios para una aplicación NodeJS, incluida una configuración de compilación y una configuración de implementación de la aplicación. No incluye una base de datos.
+    openshift.io/provider-display-name: Red Hat, Inc.
+    template.openshift.io/bindable: 'false'
+message: |-
+  Se han creado los siguientes servicios en su proyecto: ${NAME}.
+labels:
+  template: ${NAME}
+  app: ${NAME}
+objects:
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: '${NAME}'
+    annotations:
+      description: Expone y balancea la carga de los pods de aplicación.
+  spec:
+    ports:
+    - name: 8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    loadBalancerIP:
+    type: ClusterIP
+    selector:
+      name: '${NAME}'
+
+- kind: ImageStream
+  apiVersion: v1
+  metadata:
+    name: "${NAME}"
+    annotations:
+      description: Realiza un seguimiento de los cambios en la imagen de la aplicación.
+
+- kind: BuildConfig
+  apiVersion: v1
+  metadata:
+    name: '${NAME}'
+    annotations:
+      description: Define cómo construir la aplicación.
+      template.alpha.openshift.io/wait-for-ready: 'true'
+  spec:
+    source:
+      type: Binary
+    strategy:
+      dockerStrategy:
+        dockerfilePath: Dockerfile
+        env: 
+        - name: 'PORT'
+          value: '8080'
+    resources:
+      limits:
+        cpu: '${BUILD_CPU_LIMIT}'
+        memory: '${BUILD_MEMORY_LIMIT}'
+      requests:
+        cpu: '${CPU_REQUEST}'
+        memory: '${MEMORY_REQUEST}'
+    output:
+      to:
+        kind: ImageStreamTag
+        name: "${NAME}:latest"
+    triggers:
+    - imageChange: {}
+      type: ImageChange
+    - type: ConfigChange
+
+- kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: '${NAME}'
+  data:
+    API_MAPPING: '/MSTemplateNestJS'
+    API_VERSION: 'V1'
+    CONTROLLER_MESSAGE: '/Message'
+    CONTROLLER_ERROR: '/errors'
+    CONTROLLER_MOCKUP: '/Mockup'
+    CONTROLLER_HTTP_PROVIDER: '/HttpProvider'
+    HTTP_TIMEOUT: '25000'
+    LOG_LEVEL: 'ALL'
+    PORT: '8080'
+    MONGO_URL: 'mongodb://EcommerceV9:vEeCkuxnwFZxNR4y@pl-1-eastus2-azure.qremx.mongodb.net:1027,pl-1-eastus2-azure.qremx.mongodb.net:1028,pl-1-eastus2-azure.qremx.mongodb.net:1029/DBTemplateNestJS_DE?replicaSet=atlas-89o7hw-shard-0&ssl=true&authSource=admin'
+    ELASTIC_APM_SERVICE_NAME: '${NAME}'
+    ELASTIC_APM_SERVER_URL: 'http://100.123.248.182:8200'
+    ELASTIC_APM_ENVIRONMENT: 'ecommercev9dev'
+    ELASTIC_APM_CAPTURE_BODY: 'all'
+    ELASTIC_APM_CAPTURE_HEADERS: 'true'
+    ELASTIC_APM_LOG_LEVEL: 'off'
+    ELASTIC_APM_ACTIVE: 'true'
+
+- kind: DeploymentConfig
+  apiVersion: v1
+  metadata:
+    name: '${NAME}'
+    annotations:
+      description: Define cómo desplegar el servidor de aplicaciones.
+      template.alpha.openshift.io/wait-for-ready: 'true'
+  spec:
+    strategy:
+      type: Rolling
+      activeDeadlineSeconds: 21600
+      resources:
+        limits:
+          cpu: "${DEPLOY_CPU_LIMIT}"
+          memory: "${DEPLOY_MEMORY_LIMIT}"
+        requests:
+          cpu: "${CPU_REQUEST}"
+          memory: "${MEMORY_REQUEST}"
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: "${MAX_SURGE}"
+        maxUnavailable: "${MAX_UNAVAILABLE}"
+        timeoutSeconds: 300
+        updatePeriodSeconds: 1
+    triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - ${NAME}
+        from:
+          kind: ImageStreamTag
+          name: "${NAME}:latest"
+    - type: ConfigChange
+    replicas: "${{MAX_REPLICAS}}"
+    selector:
+      name: '${NAME}'
+    template:
+      metadata:
+        name: '${NAME}'
+        labels:
+          name: '${NAME}'
+      spec:
+        containers:
+        - name: ${NAME}
+          image: ""
+          ports:
+            - containerPort: 8080
+              protocol: "TCP"
+          type: "Recreate"
+          resources:
+            limits:
+              cpu: "${CPU_LIMIT}"
+              memory: "${MEMORY_LIMIT}"
+            requests: 
+              cpu: "${CPU_REQUEST}"
+              memory: "${MEMORY_REQUEST}"
+          envFrom:
+            - configMapRef:
+                name: '${NAME}'
+
+- apiVersion: autoscaling/v2
+  kind: HorizontalPodAutoscaler
+  metadata:
+    name: ${NAME}
+  spec:
+    scaleTargetRef:
+      kind: DeploymentConfig 
+      name: ${NAME}
+      apiVersion: apps.openshift.io/v1 
+      subresource: scale
+    minReplicas: "${{MIN_REPLICAS}}" 
+    maxReplicas: "${{MAX_REPLICAS}}"
+    metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: "${{CPU_TARGET_AVERAGE_UTILIZATION}}"
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: "${{MEMORY_TARGET_AVERAGE_UTILIZATION}}"
+
+parameters:
+- name: NAME
+  displayName: Name
+  description: El nombre asignado a todos los objetos frontend definidos en esta plantilla.
+  required: true
+  value: mstemplatenestjs
+- name: MEMORY_LIMIT
+  displayName: Memory Limit
+  description: Cantidad máxima de memoria que puede utilizar el contenedor.
+  required: true
+  value: 300Mi
+- name: CPU_LIMIT
+  displayName: CPU Limit
+  description: Cantidad máxima de procesador que puede utilizar el contenedor.
+  required: true
+  value: 200m
+- name: MIN_REPLICAS
+  displayName: Minimo de Pods
+  description: Cantidad minima de pods.
+  required: true
+  value: '1'
+- name: MAX_REPLICAS
+  displayName: Maximo de Pods
+  description: Cantidad maxima de pods.
+  required: true
+  value: '1'
+- name: CPU_TARGET_AVERAGE_UTILIZATION
+  displayName: Porcentaje de la CPU solicitada 
+  description: El porcentaje de la CPU solicitada que cada pod debería usar idealmente.
+  required: true
+  value: '80'
+- name: MEMORY_TARGET_AVERAGE_UTILIZATION
+  displayName: Porcentaje de memoria solicitada
+  description: El porcentaje de memoria solicitada que cada pod debería usar idealmente.
+  required: true
+  value: '95'
+- name: MAX_SURGE
+  displayName: Max Oleada
+  description: Número máximo de pods que se pueden programar por encima del número original de pods.
+  required: true
+  value: 20%
+- name: MAX_UNAVAILABLE
+  displayName: Max Disponibilidad 
+  description: número máximo de pods que pueden no estar disponibles durante la actualización.
+  required: true
+  value: 0%
+- name: BUILD_MEMORY_LIMIT
+  displayName: Memory Limit
+  description: Cantidad máxima de memoria que puede utilizar el contenedor.
+  required: true
+  value: 1Gi
+- name: BUILD_CPU_LIMIT
+  displayName: CPU Limit
+  description: Cantidad máxima de procesador que puede utilizar el contenedor.
+  required: true
+  value: 800m
+- name: DEPLOY_MEMORY_LIMIT
+  displayName: Memory Limit
+  description: Cantidad máxima de memoria que puede utilizar el contenedor.
+  required: true
+  value: 300Mi
+- name: DEPLOY_CPU_LIMIT
+  displayName: CPU Limit
+  description: Cantidad máxima de procesador que puede utilizar el contenedor.
+  required: true
+  value: 300m
+- name: MEMORY_REQUEST
+  displayName: Memory Limit
+  description: Cantidad máxima de memoria que puede utilizar el contenedor.
+  required: true
+  value: 10Mi
+- name: CPU_REQUEST
+  displayName: CPU Limit
+  description: Cantidad máxima de procesador que puede utilizar el contenedor.
+  required: true
+  value: 10m

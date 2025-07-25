@@ -1,0 +1,12 @@
+{
+  "mcp": {
+    "servers": {
+      "microservice-generator": {
+        "command": "node",
+        "args": [
+          "c:/MCP/demo/demo-mcp-21-code-generator-node/microservice-generator-mcp/dist/index.js"
+        ]
+      }
+    }
+  }
+}

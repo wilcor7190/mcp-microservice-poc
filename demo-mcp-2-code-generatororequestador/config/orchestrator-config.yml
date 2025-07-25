@@ -1,0 +1,44 @@
+# MCP Orchestrator Configuration
+orchestrator:
+  name: "microservice-orchestrator"
+  version: "1.0.0"
+  
+mcp_paths:
+  nodejs_generator:
+    path: "C:\\MCP\\demo\\demo-mcp-21-code-generator-node"
+    input_directory: "C:\\MCP\\demo\\demo-mcp-21-code-generator-node\\input"
+    output_directory: "C:\\MCP\\demo\\demo-mcp-21-code-generator-node\\output"
+    command: "node"
+    args: ["c:/MCP/demo/demo-mcp-21-code-generator-node/microservice-generator-mcp/dist/index.js"]
+    timeout: 1800  # 30 minutes
+    retry_attempts: 3
+    
+  springboot_generator:
+    path: "C:\\MCP\\demo\\demo-mcp-22-code-generator-java"
+    input_directory: "C:\\MCP\\demo\\demo-mcp-22-code-generator-java\\input"
+    output_directory: "C:\\MCP\\demo\\demo-mcp-22-code-generator-java\\output"
+    command: "java"
+    args: ["-jar", "target/microservice-generator-mcp-1.0.0.jar", "server"]
+    cwd: "C:\\MCP\\demo\\demo-mcp-22-code-generator-java"
+    timeout: 2100  # 35 minutes
+    retry_attempts: 3
+
+file_operations:
+  cleanup_after_execution: true
+  backup_before_overwrite: true
+  preserve_logs: true
+  
+analysis:
+  repository_scan_depth: 3
+  compatibility_threshold: 70
+  complexity_factors:
+    - database_type
+    - integration_count
+    - security_requirements
+    - endpoint_complexity
+
+user_interface:
+  interactive_mode: true
+  show_detailed_comparison: true
+  auto_recommend: true
+  confirmation_required: true

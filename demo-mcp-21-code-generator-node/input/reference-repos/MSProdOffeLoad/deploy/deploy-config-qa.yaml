@@ -1,0 +1,249 @@
+---
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: template-ocp
+  labels:
+    version: OCP4-1
+  annotations:
+    iconClass: icon-nestjs
+message: |-
+  Se han creado los siguientes servicios en su proyecto: ${NAME}.
+objects:
+- kind: Service
+  apiVersion: v1
+  metadata:
+    name: '${NAME}'
+    namespace: '${NAMESPACE}'
+    annotations:
+      description: ${DESCRIPTION}
+  spec:
+    ports:
+      - name: ${PORT}-tcp
+        port: ${{PORT}}
+        protocol: TCP
+        targetPort: ${{PORT}}
+    type: ClusterIP
+    selector:
+      name: '${NAME}'
+
+- kind: ConfigMap
+  apiVersion: v1
+  metadata:
+    name: '${NAME}'
+    namespace: '${NAMESPACE}'
+  data: ${{DATA_CONFIGMAP}}   
+  
+- kind: DeploymentConfig
+  apiVersion: apps.openshift.io/v1
+  metadata:
+    name: '${NAME}'
+    namespace: '${NAMESPACE}'
+    annotations:
+      description: ${DESCRIPTION}
+      template.alpha.openshift.io/wait-for-ready: 'true'
+    labels:
+        app: '${NAME}'
+        legado: ${LEGADO}
+        proyecto: ${PROYECTO}
+        subproyecto: ${SUBPROYECTO}
+        tecnologia: ${TECNOLOGIA}
+  spec:
+    replicas: '${{MIN_REPLICAS}}'
+    strategy:
+      type: Rolling
+      activeDeadlineSeconds: 21600
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: "${MAX_SURGE}"
+        maxUnavailable: "${MAX_UNAVAILABLE}"
+        timeoutSeconds: 300
+        updatePeriodSeconds: 1
+    triggers:
+    - type: ImageChange
+      imageChangeParams:
+        automatic: true
+        containerNames:
+          - ${NAME}
+        from:
+          kind: ImageStreamTag
+          name: '${NAME}:${VERSION}'
+    - type: ConfigChange
+    selector:
+      name: '${NAME}'
+    template:
+      metadata:
+        name: '${NAME}'
+        labels:
+          name: '${NAME}'
+      spec:
+        automountServiceAccountToken: false
+        containers:
+        - name: ${NAME}
+          image: ""
+          ports:
+            - containerPort: ${{PORT}}
+              protocol: "TCP"
+          type: "Recreate"
+          resources:
+            limits:
+              cpu: "${CPU_LIMIT}"
+              memory: "${MEMORY_LIMIT}"
+          envFrom:
+            - configMapRef:
+                name: '${NAME}'
+            - secretRef:
+                name: '${NAME}'
+          readinessProbe:
+            tcpSocket:
+              port: ${{PORT}}
+            initialDelaySeconds: 15
+            timeoutSeconds: 1
+            periodSeconds: 20
+            successThreshold: 1
+            failureThreshold: 5
+
+- apiVersion: autoscaling/v2
+  kind: HorizontalPodAutoscaler
+  metadata:
+    name: ${NAME}
+    namespace: '${NAMESPACE}'
+  spec:
+    minReplicas: ${{MIN_REPLICAS}} 
+    maxReplicas: ${{MAX_REPLICAS}}
+    behavior:
+      scaleUp:
+        stabilizationWindowSeconds: 120
+      scaleDown:
+        stabilizationWindowSeconds: 120
+    scaleTargetRef:
+      apiVersion: apps.openshift.io/v1 
+      kind: DeploymentConfig 
+      name: ${NAME}
+    metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: ${{CPU_TARGET_AVERAGE_UTILIZATION}}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: ${{MEMORY_TARGET_AVERAGE_UTILIZATION}}
+
+parameters:
+- name: NAME
+  description: El nombre asignado a todos los objetos frontend definidos en esta plantilla.
+  value: msprodoffeload
+- name: NAMESPACE 
+  description: Nombre del namespace
+  required: true
+  value: ecommercev9qa
+- name: VERSION 
+  description: versión de la aplicación, actualmente se define versión latest para todos los despliegues, en futuro se utilizará un método de versionamiento. 
+  value: latest
+- name: MEMORY_LIMIT
+  description: Cantidad máxima de memoria que puede utilizar el contenedor.
+  value: 400Mi
+- name: CPU_LIMIT
+  description: Cantidad máxima de procesador que puede utilizar el contenedor.
+  value: 400m
+- name: MIN_REPLICAS
+  description: Cantidad minima de pods.
+  value: '1'
+- name: MAX_REPLICAS
+  description: Cantidad maxima de pods.
+  value: '1'
+- name: CPU_TARGET_AVERAGE_UTILIZATION 
+  description: El porcentaje de la CPU solicitada que cada pod debería usar idealmente.
+  value: '80'
+- name: MEMORY_TARGET_AVERAGE_UTILIZATION
+  description: El porcentaje de memoria solicitada que cada pod debería usar idealmente.
+  value: '100'
+- name: MAX_SURGE
+  description: Número máximo de pods que se pueden programar por encima del número original de pods.
+  value: 20%
+- name: MAX_UNAVAILABLE
+  description: número máximo de pods que pueden no estar disponibles durante la actualización.
+  value: 0%
+- name: DESCRIPTION 
+  description: Descripción de la aplicación. 
+  value: Esta plantilla define los recursos necesarios para una aplicación NestJS, incluida una configuración de compilación y una configuración de implementación de la aplicación. No incluye una base de datos.
+- name: PORT 
+  description: Puerto a usar para la exposición de la aplicación. 
+  value: "8080"
+- name: PROYECTO 
+  description: Etiqueta del nombre de proyecto 
+  value: 'ecommercev9qa' 
+- name: SUBPROYECTO 
+  description: Etiqueta del nombre de sub-proyecto, si no aplica se define el mismo nombre del proyecto. 
+  value: 'ecommercev9qa' 
+- name: LEGADO
+  description: Etiqueta de legados definidos para el proyecto, estos van separados por guion bajo "_" (LEGADOA_LEGADOB). 
+  value: 'MONGO_DBPRICES_DBDISP_DBFEATURES_FILEHOST_IMGHOST'
+- name: TECNOLOGIA 
+  description: Etiqueta de la tecnología a usar, los valores validos serán= SpringBoot-Maven, NodeJS, NestJS. 
+  value: NestJS
+- name: DATA_CONFIGMAP
+  description: "Variables de entorno a usar en deployment. Ejm.= {'ENV_1': 'Valor_1', 'ENV_2': 'Valor_2', ....}"
+  value: |
+    {
+      "API_MAPPING": "/MSProdOffeLoad",
+      "API_VERSION": "V1",
+      "CONTROLLER_EVENTS": "/Events",
+      "LOG_LEVEL": "ALL",
+      "HTTP_TIMEOUT": "15000",
+      "FILEHOST": "172.22.94.68",
+      "SFTP_MODULE_PORT": "22",
+      "SFTP_MODULE_USERNAME": "",
+      "SFTP_MODULE_PASSWORD": "",
+      "IMGHOST": "100.126.22.55",
+      "SFTP_MODULE_PORT_READ_IMAGE": "2222",
+      "SFTP_READ_FILE_IMG_USERNAME": "",
+      "SFTP_READ_FILE_IMG_PASSWORD": "",
+      "SFTP_READ_FILE_IMG_PATH": "/cdn/imagenes/v9/catalogo/",
+      "SIZE_FULL_IMAGE": "646x1000/",
+      "SEZE_THUMBNAIL": "70x110/",
+      "END_POINT_IMAGE": "https://cdn.b2cqa1auth.claro.com.co/imagenes/v9/catalogo/",
+      "LANGUAGE_ID": "-1",
+      "QUANTITY_MEASURE": "C62",
+      "FULFILLMENT_CENTER_NAME": "Extended Sites Catalog Asset Store Home",
+      "PRODUCT_DATA": "claro-producto-data",
+      "SALES_CATALOG_GROUP_CATALOG_ENTRIES": "SalesCatalogGroupCatalogEntries",
+      "ATTRIBUTES_PRODUCTS": "claro-atributo-rel-producto",
+      "ATTRIBUTES_DICTIONARY": "claro-diccionario-atributo",
+      "ATTACHMENT_DATA": "claro-attachments-data",
+      "PRODUCT_INVENTORY_DATA": "claro-producto-inventario",
+      "PRICES_CATALOG": "claro-precios",
+      "SFTP_REMOTE_PATH": "/claroshopv9qa/claro/catlogue/v9/",
+      "SFTP_REMOTE_PATH_B2B": "/EcommerceQA_v9.1.15/catalogo/",
+      "SFTP_PRODUCT_DATA": "producto_data/",
+      "SFTP_SALES_CATALOG": "sales_catalog/",
+      "SFTP_SALES_CATALOG_B2B": "sales_catalog_B2B/",
+      "SFTP_ATTRIBUTES_PRODUCT": "attribute_product/",
+      "SFTP_ATTRIBUTES_DICTIONARY": "attribute_dictionary/",
+      "SFTP_ATTACHMENT": "attachments_data/",
+      "SFTP_PRODUCT_INVENTORY": "producto_inventory/",
+      "SFTP_PRICE_LIST_DATA": "price_list_data/",
+      "KAFKA_BROKER": "msbksaleschannelecomm-kafka-bootstrap.ecommercev9qa.svc:9092",
+      "KAFKA_ID_GROUP": "kafka-ms-prod-offe-load",
+      "KAFKA_TOPIC_FEATURES": "calendaralarmfeaturestopic",
+      "KAFKA_TOPIC_DISPONIBILITY": "calendaralarmdisponibilitytopic",
+      "KAFKA_TOPIC_PRICES": "calendaralarmpricestopic",
+      "MONGO": "mongodb+srv://bd_user:bd_password@clu-mongo-ecom-dev01-pl-1.qremx.mongodb.net/DBPRTProdOffeLoad_QA",
+      "DBPRICES": "mongodb://bd_user:bd_password@pl-1-eastus2-azure.qremx.mongodb.net:1027,pl-1-eastus2-azure.qremx.mongodb.net:1028,pl-1-eastus2-azure.qremx.mongodb.net:1029/DBPRTPrices_QA?replicaSet=atlas-89o7hw-shard-0&ssl=true&authSource=admin",
+      "DBDISP": "mongodb://bd_user:bd_password@pl-1-eastus2-azure.qremx.mongodb.net:1027,pl-1-eastus2-azure.qremx.mongodb.net:1028,pl-1-eastus2-azure.qremx.mongodb.net:1029/DBPRTDisponibility_QA?replicaSet=atlas-89o7hw-shard-0&ssl=true&authSource=admin",
+      "DBFEATURES": "mongodb://bd_user:bd_password@pl-1-eastus2-azure.qremx.mongodb.net:1027,pl-1-eastus2-azure.qremx.mongodb.net:1028,pl-1-eastus2-azure.qremx.mongodb.net:1029/DBPRTFeatures_QA?replicaSet=atlas-89o7hw-shard-0&ssl=true&authSource=admin",
+      "ELASTIC_APM_SERVICE_NAME": "msprodoffeload",
+      "ELASTIC_APM_SERVER_URL": "http://100.69.7.130:8200",
+      "ELASTIC_APM_ENVIRONMENT": "ecommercev9qa",
+      "ELASTIC_APM_CAPTURE_BODY": "all",
+      "ELASTIC_APM_CAPTURE_HEADERS": "true",
+      "ELASTIC_APM_LOG_LEVEL": "off",
+      "ELASTIC_APM_ACTIVE": "true",
+      "LOG_TRAZABILITY": "true"
+    }

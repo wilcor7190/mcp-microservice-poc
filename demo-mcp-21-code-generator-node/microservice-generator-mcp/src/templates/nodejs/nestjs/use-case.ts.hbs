@@ -1,0 +1,102 @@
+import { Injectable } from '@nestjs/common';
+{{#each ../integrations}}
+{{#each legacyServices}}
+import { {{helpers.pascalCase name}}Adapter } from '../../infrastructure/external/{{helpers.kebabCase name}}.adapter';
+{{/each}}
+{{/each}}
+
+export interface {{helpers.pascalCase (replace path '/' '')}}Request {
+  {{#each inputParameters}}
+  {{name}}: {{#if (eq type 'String')}}string{{/if}}{{#if (eq type 'Number')}}number{{/if}}{{#if (eq type 'Boolean')}}boolean{{/if}}{{#if (eq type 'Object')}}any{{/if}};
+  {{/each}}
+}
+
+export interface {{helpers.pascalCase (replace path '/' '')}}Response {
+  {{#each responses}}
+  {{#if (eq status 200)}}
+  success: boolean;
+  data: any;
+  message: string;
+  {{/if}}
+  {{/each}}
+}
+
+@Injectable()
+export class {{helpers.pascalCase (replace path '/' '')}}UseCase {
+  constructor(
+    {{#each ../integrations}}
+    {{#each legacyServices}}
+    private readonly {{helpers.camelCase name}}Adapter: {{helpers.pascalCase name}}Adapter,
+    {{/each}}
+    {{/each}}
+  ) {}
+
+  async execute(
+    {{#if parameters}}
+    {{#each parameters}}
+    {{this}}: string,
+    {{/each}}
+    {{/if}}
+    {{#if inputParameters}}
+    request: {{helpers.pascalCase (replace path '/' '')}}Request
+    {{/if}}
+  ): Promise<{{helpers.pascalCase (replace path '/' '')}}Response> {
+    try {
+      // Validate input parameters
+      this.validateRequest({{#if inputParameters}}request{{else}}{}{{/if}});
+
+      {{#each ../integrations}}
+      {{#each legacyServices}}
+      // Call {{name}} legacy service
+      const {{helpers.camelCase name}}Result = await this.{{helpers.camelCase name}}Adapter.call{{helpers.pascalCase name}}(
+        {{#if ../../inputParameters}}
+        {
+          {{#each inputMapping}}
+          {{legacyField}}: request.{{microserviceField}},
+          {{/each}}
+        }
+        {{else}}
+        {}
+        {{/if}}
+      );
+
+      // Map response from {{name}}
+      const mappedResult = {
+        {{#each outputMapping}}
+        {{microserviceField}}: {{../helpers.camelCase ../name}}Result.{{legacyField}},
+        {{/each}}
+      };
+      {{/each}}
+      {{/each}}
+
+      return {
+        success: true,
+        data: {{#if ../integrations}}mappedResult{{else}}{
+          // Add your business logic here
+          message: 'Use case executed successfully',
+          {{#if inputParameters}}
+          processedData: request
+          {{/if}}
+        }{{/if}},
+        message: '{{description}} completed successfully'
+      };
+    } catch (error) {
+      console.error('Error in {{helpers.pascalCase (replace path '/' '')}}UseCase:', error);
+      throw error;
+    }
+  }
+
+  private validateRequest({{#if inputParameters}}request: {{helpers.pascalCase (replace path '/' '')}}Request{{else}}request: any{{/if}}): void {
+    {{#if inputParameters}}
+    {{#each inputParameters}}
+    {{#if required}}
+    if (!request.{{name}}) {
+      throw new Error('{{name}} is required');
+    }
+    {{/if}}
+    {{/each}}
+    {{else}}
+    // Add validation logic here
+    {{/if}}
+  }
+}

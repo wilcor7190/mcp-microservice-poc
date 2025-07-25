@@ -1,0 +1,38 @@
+{
+  "name": "demo-mcp-3-standards-validator-nodejs",
+  "version": "1.0.0",
+  "description": "MCP especializado para validar estándares de desarrollo en microservicios Node.js/NestJS",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mcp",
+    "nodejs",
+    "nestjs",
+    "standards",
+    "validation",
+    "eslint",
+    "testing",
+    "security"
+  ],
+  "author": "MCP Demo",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "chalk": "^5.4.1",
+    "child_process": "^1.0.2",
+    "fs-extra": "^11.2.0",
+    "path": "^0.12.7"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.8.3"
+  }
+}

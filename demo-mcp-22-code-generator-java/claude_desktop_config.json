@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "java-generator": {
+      "command": "node",
+      "args": ["C:/MCP/demo/demo-mcp-22-code-generator-java/dist/index.js"],
+      "cwd": "C:/MCP/demo/demo-mcp-22-code-generator-java"
+    }
+  }
+}

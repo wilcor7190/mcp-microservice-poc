@@ -1,0 +1,21 @@
+export interface IPriceList {
+  PriceListUniqueId: string,
+  PriceListName: string,
+  CatentryUniqueId: string,
+  CatentryPartNumber: string,
+  Identifier: string,
+  Precedence: string,
+  StartDate: string,
+  EndDate: string,
+  LastUpdate: string,
+  QuantityUnitIdentifier: string,
+  MinimumQuantity: string,
+  Description: string,
+  PriceInCOP: string,
+  PriceInCOPTax: string,
+  PlazosSinImpuestos: string,
+  PlazosConImpuestos: string,
+  Field1: string,
+  Field2: string,
+  Delete: string  
+}

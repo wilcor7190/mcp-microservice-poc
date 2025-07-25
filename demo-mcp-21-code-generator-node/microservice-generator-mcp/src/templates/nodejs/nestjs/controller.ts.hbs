@@ -1,0 +1,69 @@
+import { Controller, Get, Post, Put, Delete, Patch, Body, Param, Query } from '@nestjs/common';
+{{#if security.authentication}}
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+{{/if}}
+import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { {{helpers.pascalCase (replace path '/' '')}}UseCase } from '../../../domain/use-cases/{{helpers.kebabCase (replace path '/' '')}}.use-case';
+{{#each inputParameters}}
+import { {{helpers.pascalCase name}}Dto } from '../dto/{{helpers.kebabCase name}}.dto';
+{{/each}}
+
+@ApiTags('{{path}}')
+@Controller('{{path}}')
+{{#if security.authentication}}
+@UseGuards(JwtAuthGuard)
+{{/if}}
+export class {{helpers.pascalCase (replace path '/' '')}}Controller {
+  constructor(
+    private readonly {{helpers.camelCase (replace path '/' '')}}UseCase: {{helpers.pascalCase (replace path '/' '')}}UseCase,
+  ) {}
+
+  @{{method}}('{{#if (neq method 'GET')}}{{path}}{{/if}}')
+  @ApiOperation({ 
+    summary: '{{description}}',
+    description: '{{description}}'
+  })
+  {{#each responses}}
+  @ApiResponse({ 
+    status: {{status}}, 
+    description: '{{description}}' 
+  })
+  {{/each}}
+  async {{helpers.camelCase method}}{{helpers.pascalCase (replace path '/' '')}}(
+    {{#if parameters}}
+    {{#each parameters}}
+    @Param('{{this}}') {{this}}: string,
+    {{/each}}
+    {{/if}}
+    {{#if inputParameters}}
+    {{#if (eq ../method 'GET')}}
+    @Query() queryParams: {{helpers.pascalCase (first inputParameters).name}}Dto,
+    {{else}}
+    @Body() requestBody: {{helpers.pascalCase (first inputParameters).name}}Dto,
+    {{/if}}
+    {{/if}}
+  ) {
+    try {
+      {{#if (eq method 'GET')}}
+      const result = await this.{{helpers.camelCase (replace path '/' '')}}UseCase.execute(
+        {{#if parameters}}{{#each parameters}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}{{/if}}
+        {{#if inputParameters}}{{#if parameters}}, {{/if}}queryParams{{/if}}
+      );
+      {{else}}
+      const result = await this.{{helpers.camelCase (replace path '/' '')}}UseCase.execute(
+        {{#if parameters}}{{#each parameters}}{{this}}{{#unless @last}}, {{/unless}}{{/each}}{{/if}}
+        {{#if inputParameters}}{{#if parameters}}, {{/if}}requestBody{{/if}}
+      );
+      {{/if}}
+
+      return {
+        success: true,
+        data: result,
+        message: '{{description}} executed successfully'
+      };
+    } catch (error) {
+      throw error;
+    }
+  }
+}

@@ -1,0 +1,135 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ${appName}-config
+  namespace: nm-ivr-evolucion-prod
+data:
+  SPRING_APPLICATION_NAME: "${appName}"
+  SERVER_PORT: "8080"
+  LOGGING_PATTERN_CONSOLE: "{\"applicationName\":\"${spring.application.name}\", \"methodName\":\"%M\", \"transactionId\":\"%X{X-B3-TraceId:-}\", \"level\": \"%p\", \"message\": \"%replace(%m%wEx{6}){'[\r\n]+', '\\n'}%nopex\", \"processingTime\":\"%X{processing_time}\", \"timestamp\": \"%d\", \"source\": \"%logger{63}:%L\"}%n"
+  LOGGIN_LEVEL_CO_COM_CLARO: "trace"
+  LOGGIN_LEVEL_CO_COM_CLARO_FILTER: "off"
+  LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WS_CLIENT_MESSAGETRACING_SENT: "TRACE"
+  LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WS_SERVER_MESSAGETRACING_SENT: "TRACE"
+  LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WS_CLIENT_MESSAGETRACING_RECEIVED: "TRACE"
+  LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WS_SERVER_MESSAGETRACING_RECEIVED: "TRACE"
+  LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WEB: "INFO"
+  TZ: "America/Bogota"
+  SPRING_MAIN_LAZY_INITIALIZATION: "true"
+  ENV_PATH_URL_ENDPOINT: "${endpoint}"
+  ENV_PATH_URL_OPERATION: "${operation}"
+  MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "hystrix.stream, *"
+  HYSTRIX_COMMAND_GETNITEXCLUIDOS_EXECUTION_ISOLATION_THREAD_TIMEOUTINMILLISECONDS: "8000"
+  HYSTRIX_THREADPOOL_GETNITEXCLUIDOS_CORESIZE: "100"
+  HYSTRIX_THREADPOOL_GETNITEXCLUIDOS_MAXIMUMSIZE: "200"
+  ELASTIC_APM_ENABLED: "true"
+  ELASTIC_APM_LOG_LEVEL: "INFO"
+  ELASTIC_APM_SERVICE_NAME: "${appName}"
+  ELASTIC_APM_SECRET_TOKEN: ""
+  ELASTIC_APM_ENVIRONMENT: "IVRPROD"
+  ELASTIC_APM_SERVER_URL: "http://100.123.248.182:8200"
+  ELASTIC_APM_APPLICATION_PACKAGES: "co.com.claro.${appName}"
+---
+apiVersion: v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: ${appName}
+    legado: LEGADO
+    proyecto: IVR
+    subproyecto: SUB_PROYECTO
+    tecnologia: SpringBoot-Maven
+  name: ${appName}
+  namespace: nm-ivr-evolucion-prod
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    app: ${appName}
+    deploymentconfig: ${appName}
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources:
+      limits:
+        cpu: 200m
+        memory: 350Mi
+      requests:
+        cpu: 10m
+        memory: 10Mi
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 120
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      labels:
+        app: ${appName}
+        deploymentconfig: ${appName}
+      name : ${appName}
+    spec:
+      containers:
+        - envFrom:
+            - configMapRef:
+                name: ${appName}-config
+            - secretRef:
+                name: ${appName}-secret
+          image: docker-registry.default.svc:5000/nm-ivr-evolucion-prod/${appName}:latest
+          imagePullPolicy: IfNotPresent
+          name: ${appName}
+          ports:
+            - name : service-port
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 350Mi
+            requests:
+              cpu: 10m
+              memory: 10Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ${appName}
+  name: ${appName}
+  namespace: nm-ivr-evolucion-prod
+spec:
+  ports:
+    - name : service-port
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: ${appName}
+    deploymentconfig: ${appName}
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Route
+metadata:
+  labels:
+    app: ${appName}
+  name: ${appName}
+  namespace: nm-ivr-evolucion-prod
+spec:
+  port:
+    targetPort: service-port
+  to:
+    kind: Service
+    name: ${appName}
+    weight: 100
+  wildcardPolicy: None

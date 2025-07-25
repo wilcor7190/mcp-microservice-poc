@@ -1,0 +1,96 @@
+import { Module } from '@nestjs/common';
+{{#if (eq database 'oracle')}}
+import { TypeOrmModule } from '@nestjs/typeorm';
+{{/if}}
+{{#if (eq database 'postgresql')}}
+import { TypeOrmModule } from '@nestjs/typeorm';
+{{/if}}
+{{#if (eq database 'mysql')}}
+import { TypeOrmModule } from '@nestjs/typeorm';
+{{/if}}
+{{#if (eq database 'mongodb')}}
+import { MongooseModule } from '@nestjs/mongoose';
+{{/if}}
+{{#if security.authentication}}
+import { JwtModule } from '@nestjs/jwt';
+import { PassportModule } from '@nestjs/passport';
+{{/if}}
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
+// Import modules for each endpoint
+{{#each endpoints}}
+import { {{helpers.pascalCase path}}Module } from './infrastructure/web/modules/{{helpers.kebabCase path}}.module';
+{{/each}}
+
+// Import common modules
+import { DatabaseModule } from './infrastructure/database/database.module';
+import { SharedModule } from './shared/shared.module';
+
+@Module({
+  imports: [
+    // Configuration
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env.local', '.env'],
+    }),
+
+    {{#if (or (eq database 'oracle') (eq database 'postgresql') (eq database 'mysql'))}}
+    // Database
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: '{{database}}' as any,
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USERNAME'),
+        password: configService.get('DB_PASSWORD'),
+        {{#if (eq database 'oracle')}}
+        serviceName: configService.get('DB_SERVICE_NAME'),
+        {{else}}
+        database: configService.get('DB_NAME'),
+        {{/if}}
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: configService.get('NODE_ENV') !== 'production',
+        logging: configService.get('NODE_ENV') === 'development',
+      }),
+      inject: [ConfigService],
+    }),
+    {{/if}}
+
+    {{#if (eq database 'mongodb')}}
+    // MongoDB
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGODB_URI'),
+      }),
+      inject: [ConfigService],
+    }),
+    {{/if}}
+
+    {{#if security.authentication}}
+    // Authentication
+    PassportModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: '1h' },
+      }),
+      inject: [ConfigService],
+    }),
+    {{/if}}
+
+    // Application modules
+    DatabaseModule,
+    SharedModule,
+    
+    // Feature modules
+    {{#each endpoints}}
+    {{helpers.pascalCase path}}Module,
+    {{/each}}
+  ],
+  controllers: [],
+  providers: [],
+})
+export class AppModule {}

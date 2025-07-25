@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "code-orchestrator": {
+      "command": "node",
+      "args": ["C:\\MCP\\demo\\demo-mcp-2-code-generatororequestador\\build\\index.js"],
+      "cwd": "C:\\MCP\\demo\\demo-mcp-2-code-generatororequestador"
+    }
+  }
+}

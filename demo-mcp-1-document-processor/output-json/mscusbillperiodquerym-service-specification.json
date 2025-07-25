@@ -1,0 +1,148 @@
+{
+  "metadata": {
+    "sourceFile": "ET001 MSCusBillPeriodQueryM_19062025.xlsx",
+    "processedAt": "2025-07-25T17:15:07.671Z",
+    "version": "1.0.0"
+  },
+  "microservice": {
+    "name": "mscusbillperiodquerym-service",
+    "description": "MicroServicio",
+    "version": "1.0.0",
+    "port": 3001,
+    "team": "Backend Team",
+    "repository": "https://github.com/company/mscusbillperiodquerym-service",
+    "summary": "Microservicio para MSCusBillPeriodQueryM"
+  },
+  "database": "oracle",
+  "endpoints": [
+    {
+      "method": "GET",
+      "path": "/MS/CUS/CustomerBill/MSCusBillPeriodQueryM/v1.0/QueryCicleChangeStatusCusBil",
+      "description": "Operación para administrar las solicitudes de registro de programación, cancelación y consulta de cambio de ciclo para clientes pospago móvil",
+      "parameters": [
+        "min",
+        "custCode",
+        "coId"
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "description": "Operación exitosa"
+        },
+        {
+          "status": 400,
+          "description": "Error en la validación de datos"
+        },
+        {
+          "status": 404,
+          "description": "Recurso no encontrado"
+        },
+        {
+          "status": 500,
+          "description": "Error interno del servidor"
+        }
+      ],
+      "inputParameters": [
+        {
+          "name": "min",
+          "type": "Number",
+          "required": false,
+          "description": "Número del min del cliente"
+        },
+        {
+          "name": "custCode",
+          "type": "String",
+          "required": false,
+          "description": "Código del cliente"
+        },
+        {
+          "name": "coId",
+          "type": "Number",
+          "required": false,
+          "description": "Contrato del cliente"
+        }
+      ]
+    }
+  ],
+  "integrations": [
+    {
+      "name": "prc_consultarestadocc_app",
+      "type": "Base de datos",
+      "connection": "BSCSQA = (DESCRIPTION = (ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 132.147.170.98)(PORT = 1750)))(CONNECT_DATA = (SERVICE_NAME = BSCSQA)))",
+      "description": "Procedimiento para consultar el estado de solicitudes de cambio de ciclo",
+      "configuration": "",
+      "legacyServices": [
+        {
+          "name": "prc_consultarestadocc_app",
+          "description": "Procedimiento para consultar el estado de solicitudes de cambio de ciclo",
+          "type": "Base de datos",
+          "urls": {
+            "QA": "BSCSQA = (DESCRIPTION = (ADDRESS_LIST =(ADDRESS = (PROTOCOL = TCP)(HOST = 132.147.170.98)(PORT = 1750)))(CONNECT_DATA = (SERVICE_NAME = BSCSQA)))"
+          },
+          "configuration": "",
+          "inputMapping": [
+            {
+              "microserviceField": "input",
+              "legacyField": "Input ",
+              "description": "Descripción",
+              "type": "Tipo",
+              "required": false
+            }
+          ],
+          "outputMapping": [
+            {
+              "legacyField": "output",
+              "microserviceField": "Output",
+              "description": "Descripción",
+              "type": "Tipo",
+              "required": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "security": {
+    "authentication": "JWT",
+    "authorization": "RBAC",
+    "cors": true
+  },
+  "configuration": {
+    "environment": [
+      "dev",
+      "test",
+      "prod"
+    ],
+    "secrets": [
+      "db-password",
+      "jwt-secret",
+      "api-key"
+    ],
+    "configMaps": [
+      "app-config",
+      "logging-config"
+    ]
+  },
+  "technicalDetails": {
+    "changeType": "",
+    "hut": "",
+    "deployment": {},
+    "environments": [],
+    "namespace": "",
+    "platform": "",
+    "capacity": "",
+    "automation": "",
+    "connectivity": "",
+    "repository": {
+      "exists": false,
+      "organization": "",
+      "url": "",
+      "branch": ""
+    },
+    "apiGateway": {
+      "exists": false,
+      "configuration": ""
+    }
+  },
+  "businessValue": ""
+}

@@ -1,0 +1,40 @@
+{
+  "name": "demo-mcp-3-standards-validator-java",
+  "version": "1.0.0",
+  "description": "MCP especializado para validar estándares de desarrollo en microservicios Java/Spring Boot",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mcp",
+    "java",
+    "spring-boot",
+    "standards",
+    "validation",
+    "maven",
+    "junit",
+    "security"
+  ],
+  "author": "MCP Demo",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "fs-extra": "^11.2.0",
+    "path": "^0.12.7",
+    "chalk": "^5.4.1",
+    "child_process": "^1.0.2",
+    "xml2js": "^0.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/xml2js": "^0.4.14",
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
+  }
+}

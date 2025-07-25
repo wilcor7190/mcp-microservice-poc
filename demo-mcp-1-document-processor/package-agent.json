@@ -1,0 +1,27 @@
+{
+  "name": "mcp-document-processor-agent",
+  "version": "1.0.0",
+  "description": "Agente MCP para procesamiento interactivo de especificaciones técnicas",
+  "main": "agent/index.js",
+  "type": "module",
+  "scripts": {
+    "start-agent": "node agent/index.js",
+    "build-agent": "tsc agent/index.ts --outDir agent/dist --target ES2022 --module ESNext --moduleResolution node",
+    "agent": "tsx agent/index.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.5.0",
+    "node-xlsx": "^0.24.0",
+    "mammoth": "^1.6.0",
+    "inquirer": "^9.2.0",
+    "chalk": "^5.3.0",
+    "ora": "^7.0.0",
+    "boxen": "^7.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/inquirer": "^9.0.0",
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0"
+  }
+}

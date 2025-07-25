@@ -1,0 +1,253 @@
+---
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: ${NAME}
+  annotations:
+    openshift.io/display-name: Java
+    description: ${appName}
+    tags: instalacion,install,SpringBoot
+    iconClass: icon-java
+    openshift.io/long-description: Esta plantilla define los recursos necesarios para una aplicación SpringBoot, incluida una configuración de compilación y una configuración de implementación de la aplicación. No incluye una base de datos.
+    openshift.io/provider-display-name: Red Hat, Inc.
+    template.openshift.io/bindable: 'false'
+message: |-
+  Se han creado los siguientes servicios en su proyecto: ${NAME}.
+labels:
+  template: ${NAME}
+  app: ${NAME}
+objects:
+  - kind: Service
+    apiVersion: v1
+    metadata:
+      name: '${NAME}'
+      annotations:
+        description: description
+    spec:
+      ports:
+        - name: 8080-tcp
+          port: 8080
+          protocol: TCP
+          targetPort: 8080
+      type: ClusterIP
+      selector:
+        name: '${NAME}'
+  - kind: Route
+    apiVersion: v1
+    metadata:
+      name: '${NAME}'
+    spec:
+      path: "/"
+      to:
+        kind: Service
+        name: '${NAME}'
+      port:
+        targetPort: 8080-tcp
+  - kind: ImageStream
+    apiVersion: v1
+    metadata:
+      name: '${NAME}'
+      annotations:
+        description: description
+
+  - kind: BuildConfig
+    apiVersion: v1
+    metadata:
+      name: '${NAME}'
+      annotations:
+        description: Define cómo construir la aplicación.
+        template.alpha.openshift.io/wait-for-ready: 'true'
+    spec:
+      resources:
+        limits:
+          cpu: 600m
+          memory: 1G
+        requests:
+          cpu: 10m
+          memory: 10Mi
+      source:
+        type: Binary
+      strategy:
+        dockerStrategy:
+          dockerfilePath: Dockerfile
+          env:
+            - name: 'PORT'
+              value: '8080'
+      output:
+        to:
+          kind: ImageStreamTag
+          name: '${NAME}:latest'
+      triggers:
+        - imageChange: {}
+          type: ImageChange
+        - type: ConfigChange
+
+  - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: '${NAME}'
+    data:
+  - kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: '${NAME}'
+    data:
+      SPRING_APPLICATION_NAME: "${appName}"
+      SERVER_PORT: "8080"
+      LOGGING_PATTERN_CONSOLE: "{\"applicationName\":\"${spring.application.name}\", \"methodName\":\"%M\", \"transactionId\":\"%X{X-B3-TraceId:-}\", \"level\": \"%p\", \"message\": \"%replace(%m%wEx{6}){'[\r\n]+', '\\n'}%nopex\", \"processingTime\":\"%X{processing_time}\", \"timestamp\": \"%d\", \"source\": \"%logger{63}:%L\"}%n"
+      LOGGIN_LEVEL_CO_COM_CLARO: "trace"
+      LOGGIN_LEVEL_CO_COM_CLARO_FILTER: "off"
+      LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WS_CLIENT_MESSAGETRACING_SENT: "TRACE"
+      LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WS_SERVER_MESSAGETRACING_SENT: "TRACE"
+      LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WS_CLIENT_MESSAGETRACING_RECEIVED: "TRACE"
+      LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WS_SERVER_MESSAGETRACING_RECEIVED: "TRACE"
+      LOGGIN_LEVEL_ORG_SPRINGFRAMEWORK_WEB: "INFO"
+      TZ: "America/Bogota"
+      SPRING_MAIN_LAZY_INITIALIZATION: "true"
+      ENV_PATH_URL_ENDPOINT: "${endpoint}"
+      ENV_PATH_URL_OPERATION: "${operation}"
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: "hystrix.stream, *"
+      HYSTRIX_COMMAND_GETNITEXCLUIDOS_EXECUTION_ISOLATION_THREAD_TIMEOUTINMILLISECONDS: "8000"
+      HYSTRIX_THREADPOOL_GETNITEXCLUIDOS_CORESIZE: "100"
+      HYSTRIX_THREADPOOL_GETNITEXCLUIDOS_MAXIMUMSIZE: "200"
+      ELASTIC_APM_ENABLED: "true"
+      ELASTIC_APM_LOG_LEVEL: "INFO"
+      ELASTIC_APM_SERVICE_NAME: "${appName}"
+      ELASTIC_APM_SECRET_TOKEN: ""
+      ELASTIC_APM_ENVIRONMENT: "IVQA-ARO"
+      ELASTIC_APM_SERVER_URL: "http://100.123.248.182:8200"
+      ELASTIC_APM_APPLICATION_PACKAGES: "co.com.claro.${appName}"
+  - kind: DeploymentConfig
+    apiVersion: apps.openshift.io/v1
+    metadata:
+      name: '${NAME}'
+      annotations:
+        description: Define cómo desplegar el servidor de aplicaciones.
+        template.alpha.openshift.io/wait-for-ready: 'true'
+      labels:
+        app: ${appName}
+        legado: LEGADO
+        proyecto: IVR
+        subproyecto: SUB_PROYECTO
+        tecnologia: SpringBoot-Maven
+    spec:
+      strategy:
+        type: Rolling
+        activeDeadlineSeconds: 21600
+        resources: {}
+        rollingParams:
+          intervalSeconds: 1
+          maxSurge: '${MAX_SURGE}'
+          maxUnavailable: '${MAX_UNAVAILABLE}'
+          timeoutSeconds: 300
+          updatePeriodSeconds: 1
+      triggers:
+        - type: ImageChange
+          imageChangeParams:
+            automatic: true
+            containerNames:
+              - ${NAME}
+            from:
+              kind: ImageStreamTag
+              name: '${NAME}:latest'
+        - type: ConfigChange
+      replicas: '${{MAX_REPLICAS}}'
+      selector:
+        name: '${NAME}'
+      template:
+        metadata:
+          name: '${NAME}'
+          labels:
+            name: '${NAME}'
+        spec:
+          containers:
+            - name: ${NAME}
+              image: ''
+              ports:
+                - containerPort: 8080
+                  protocol: 'TCP'
+              type: 'Recreate'
+              resources:
+                limits:
+                  cpu: '${CPU_LIMIT}'
+                  memory: '${MEMORY_LIMIT}'
+                requests:
+                  cpu: '${CPU_REQUEST}'
+                  memory: '${MEMORY_REQUEST}'
+              envFrom:
+                - configMapRef:
+                    name: '${NAME}'
+                - secretRef:
+                    name: '${NAME}'
+          serviceAccountName: useroot
+          serviceAccount: useroot
+  - apiVersion: autoscaling/v1
+    kind: HorizontalPodAutoscaler
+    metadata:
+      name: ${NAME}
+    spec:
+      scaleTargetRef:
+        kind: DeploymentConfig
+        name: ${NAME}
+        apiVersion: apps.openshift.io/v1
+        subresource: scale
+      minReplicas: '${{MIN_REPLICAS}}'
+      maxReplicas: '${{MAX_REPLICAS}}'
+      targetCPUUtilizationPercentage: '${{CPU_TARGET_AVERAGE_UTILIZATION}}'
+      targetMemoryUtilizationPercentage: '${{MEMORY_TARGET_AVERAGE_UTILIZATION}}'
+parameters:
+  - name: NAME
+    displayName: Name
+    description: El nombre asignado a todos los objetos frontend definidos en esta plantilla.
+    required: true
+    value: 'msrespcharacteristic'
+  - name: MEMORY_LIMIT
+    displayName: Memory Limit
+    description: Cantidad máxima de memoria que puede utilizar el contenedor.
+    required: true
+    value: 350Mi
+  - name: CPU_LIMIT
+    displayName: CPU Limit
+    description: Cantidad máxima de procesador que puede utilizar el contenedor.
+    required: true
+    value: 200m
+  - name: MEMORY_REQUEST
+    displayName: Memory Request
+    description: Cantidad mínima de memoria que puede utilizar el contenedor.
+    required: true
+    value: 10Mi
+  - name: CPU_REQUEST
+    displayName: CPU Request
+    description: Cantidad mínima de procesador que puede utilizar el contenedor.
+    required: true
+    value: 10m
+  - name: MIN_REPLICAS
+    displayName: Minimo de Pods
+    description: Cantidad minima de pods.
+    required: true
+    value: '1'
+  - name: MAX_REPLICAS
+    displayName: Maximo de Pods
+    description: Cantidad maxima de pods.
+    required: true
+    value: '1'
+  - name: CPU_TARGET_AVERAGE_UTILIZATION
+    displayName: Porcentaje de la CPU solicitada
+    description: El porcentaje de la CPU solicitada que cada pod debería usar idealmente.
+    required: true
+    value: '70'
+  - name: MEMORY_TARGET_AVERAGE_UTILIZATION
+    displayName: Porcentaje de la Memoria solicitada
+    description: El porcentaje de la memoria solicitada que cada pod debería usar idealmente.
+    required: true
+    value: '70'
+  - name: MAX_SURGE
+    displayName: Max Oleada
+    description: Número máximo de pods que se pueden programar por encima del número original de pods.
+    required: true
+    value: 10%
+  - name: MAX_UNAVAILABLE
+    displayName: Max Disponibilidad
+    description: número máximo de pods que pueden no estar disponibles durante la actualización.
+    required: true
+    value: '5%'

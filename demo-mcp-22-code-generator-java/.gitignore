@@ -1,0 +1,66 @@
+# Binarios y archivos compilados
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Archivos del IDE
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+.settings/
+.project
+.classpath
+
+# Sistema operativo
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+
+# Maven
+.mvn/
+
+# Gradle
+.gradle/
+build/
+
+# Spring Boot
+spring-boot-starter-*/
+
+# Base de datos
+*.db
+*.h2.db
+
+# Output del generador
+output/
+
+# Archivos de configuración local
+application-local.yml
+application-local.properties
+
+# Secrets y configuración sensible
+*.key
+*.pem
+*.p12
+secrets/

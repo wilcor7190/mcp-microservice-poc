@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "microservice-generator": {
+      "command": "node",
+      "args": [
+        "c:/MCP/demo/demo-mcp-21-code-generator-node/microservice-generator-mcp/dist/index.js"
+      ],
+      "description": "Generador de microservicios Node.js/TypeScript basado en especificaciones JSON"
+    }
+  }
+}

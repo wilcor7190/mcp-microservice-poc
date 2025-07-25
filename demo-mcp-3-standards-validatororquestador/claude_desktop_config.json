@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "standards-orchestrator": {
+      "command": "node",
+      "args": ["C:/MCP/demo/demo-mcp-3-standards-validatororquestador/dist/index.js"],
+      "cwd": "C:/MCP/demo/demo-mcp-3-standards-validatororquestador"
+    }
+  }
+}

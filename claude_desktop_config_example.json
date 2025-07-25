@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "standards-orchestrator": {
+      "command": "node",
+      "args": ["C:\\MCP\\demo\\demo-mcp-3-standards-validatororquestador\\dist\\index.js"],
+      "cwd": "C:\\MCP\\demo\\demo-mcp-3-standards-validatororquestador"
+    },
+    "nodejs-validator": {
+      "command": "node", 
+      "args": ["C:\\MCP\\demo\\demo-mcp-3-standards-validator_nodejs\\dist\\index.js"],
+      "cwd": "C:\\MCP\\demo\\demo-mcp-3-standards-validator_nodejs"
+    },
+    "java-validator": {
+      "command": "node",
+      "args": ["C:\\MCP\\demo\\demo-mcp-3-standards-validator_java\\dist\\index.js"], 
+      "cwd": "C:\\MCP\\demo\\demo-mcp-3-standards-validator_java"
+    }
+  }
+}

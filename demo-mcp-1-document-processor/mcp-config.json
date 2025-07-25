@@ -1,0 +1,88 @@
+{
+  "mcpServer": {
+    "name": "document-processor",
+    "version": "1.0.0",
+    "description": "MCP para procesamiento de especificaciones técnicas de microservicios",
+    "command": "node",
+    "args": ["dist/index.js"],
+    "cwd": ".",
+    "env": {
+      "NODE_ENV": "production"
+    }
+  },
+  "capabilities": {
+    "tools": [
+      {
+        "name": "process_microservice_specification",
+        "description": "Procesa especificaciones técnicas de microservicios desde Excel y genera JSON estructurado",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "filePath": {
+              "type": "string",
+              "description": "Ruta al archivo Excel (.xlsx) con la especificación técnica del microservicio"
+            }
+          },
+          "required": ["filePath"]
+        }
+      },
+      {
+        "name": "analyze_input_folder",
+        "description": "Analiza todos los archivos Excel en la carpeta input-specifications",
+        "inputSchema": {
+          "type": "object",
+          "properties": {},
+          "required": []
+        }
+      }
+    ]
+  },
+  "folders": {
+    "input": {
+      "path": "./input-specifications",
+      "description": "Carpeta para archivos Excel con especificaciones técnicas",
+      "supportedFormats": [".xlsx", ".xls", ".csv"]
+    },
+    "output": {
+      "path": "./output-json",
+      "description": "Carpeta para archivos JSON generados",
+      "format": "JSON estructurado"
+    }
+  },
+  "workflow": {
+    "description": "Flujo de procesamiento de especificaciones técnicas",
+    "steps": [
+      {
+        "step": 1,
+        "description": "Colocar archivos Excel en input-specifications/",
+        "action": "manual"
+      },
+      {
+        "step": 2,
+        "description": "Ejecutar herramienta process_microservice_specification",
+        "action": "mcp_tool",
+        "tool": "process_microservice_specification"
+      },
+      {
+        "step": 3,
+        "description": "Revisar JSON generado en output-json/",
+        "action": "manual"
+      },
+      {
+        "step": 4,
+        "description": "Usar JSON como entrada para siguiente MCP",
+        "action": "next_mcp"
+      }
+    ]
+  },
+  "examples": {
+    "exampleFiles": [
+      "input-specifications/user-management-service-spec.xlsx",
+      "input-specifications/product-catalog-service-spec.xlsx"
+    ],
+    "expectedOutput": [
+      "output-json/user-management-service-specification.json",
+      "output-json/product-catalog-service-specification.json"
+    ]
+  }
+}
